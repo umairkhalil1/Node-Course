@@ -10,12 +10,18 @@ yargs.command({
     builder:{
         title:{
             describe: 'Note title',
-            demandOption: true, // will not add a new note unless the title is defined
+            demandOption: true, 
             type: 'string', // Only accepts value of a string
+        },
+        body:{
+            describe: 'Adding detail',
+            demandOption: true, // will not add a new note unless the title and body is defined
+            type: 'string',
         },
     },
     handler: function(argv) {
-        console.log('Adding a new note', argv)
+        console.log('Title: ' + argv.title),
+        console.log('Detail: ' + argv.body) // run command - node app.js add --title="shopping list" --body="eggs and bread"
     }
 })
 
