@@ -1,6 +1,6 @@
 const validator = require('validator')
 const chalk = require('chalk')
-const getNotes= require('./notes.js')
+const notes= require('./notes.js')
 const yargs = require('yargs')
 
 // Create an add command 
@@ -9,29 +9,38 @@ yargs.command({
     describe: 'Adding a note',
     builder:{
         title:{
-            describe: 'Note title',
+            describe: 'Note Title',
             demandOption: true, 
             type: 'string', // Only accepts value of a string
         },
         body:{
-            describe: 'Adding detail',
+            describe: 'Adding Detail',
             demandOption: true, // will not add a new note unless the title and body is defined
             type: 'string',
         },
     },
-    handler: function(argv) {
-        console.log('Title: ' + argv.title),
-        console.log('Detail: ' + argv.body) // run command - node app.js add --title="shopping list" --body="eggs and bread"
-    }
+    handler: function(argv) { // contains the arguements within the handler
+        notes.addNote(argv.title, argv.body)
+        console.log('Title: ' + argv.title), // matches up to the title command within builder
+        console.log('Detail: ' + argv.body) // matches up to the body command within builder
+    } 
 })
 
 // Create a remove command 
 yargs.command({
     command: 'remove',
     describe: 'Removing a note',
-    handler: function() {
-        console.log('Removing a note')
-    }
+    builder:{
+        title: {
+            describe: 'Note Title',
+            demandOption: true,
+            type: 'string',
+        }
+    },
+    handler: function(argv) {
+        notes.removeNote(argv.title)
+        //console.log('Removing the note: ' + argv.title) // matches up to remove the title within builder
+    },
 })
 
 // Create a list command 
@@ -54,6 +63,8 @@ yargs.command({
 yargs.parse() // acts the same as console.log(yargs.argv)
 
 /*
+run command for the above - node app.js add --title="shopping list" --body="eggs and bread"
+
 const fs = require('fs')
 fs.appendFileSync('notes.txt', 'This is a new line')
 fs.writeFileSync('notes.txt','This file was created by Node.js')

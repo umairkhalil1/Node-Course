@@ -3,7 +3,7 @@ const fs = require('fs')
 // Load and parse the JSON data
 const dataBuffer = fs.readFileSync('1-json.json') // returns the binary data
 const dataJSON = dataBuffer.toString() // converts the binary data into JSON
-const newInfo = JSON.parse(dataJSON)
+const newInfo = JSON.parse(dataJSON) // Parses the JSON data into an object
 
 // Change with new properties 
 newInfo.name = 'Umair'
